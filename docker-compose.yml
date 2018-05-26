@@ -3,11 +3,13 @@ services:
   master:
     image: eeacms/jenkins-master
     ports:
-    - "80:8080"
+      - "8443:8443"
     environment:
-    - JAVA_OPTS=-Xmx2048m
+      - JAVA_OPTS=-Xmx2048m
+      - JENKINS_OPTS=--httpPort=8080 --httpsPort=8443 --httpsKeyStore=${httpsKeyStore} --httpsKeyStorePassword=${httpsKeyStorePassword}
     volumes:
-    - jenkins-master:/var/jenkins_home
+      - jenkins-master:/var/jenkins_home
+      - /etc/keystore.jks:/etc/keystore.jks
 
   worker:
     image: eeacms/jenkins-slave
@@ -19,7 +21,9 @@ services:
       JENKINS_PASS: "jenkins"
       JENKINS_RETRY: "10"
     volumes:
-    - jenkins-worker:/var/jenkins_home/worker
+      - jenkins-worker:/var/jenkins_home/worker
+    depends_on:
+      - master
 
 volumes:
   jenkins-master:
