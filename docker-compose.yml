@@ -1,7 +1,7 @@
 version: "2"
 services:
   master:
-    image: eeacms/jenkins-master
+    image: lhoussou/jenkins-master:v1
     ports:
       - "8443:8443"
     environment:
@@ -13,7 +13,7 @@ services:
       - /etc/keystore.jks:/etc/keystore.jks
 
   worker:
-    image: eeacms/jenkins-slave
+    image: lhoussou/jenkins-slave:v1
     environment:
       JAVA_OPTS: "-Xmx2048m"
       JENKINS_MASTER: "http://master:8080"
