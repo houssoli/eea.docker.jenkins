@@ -9,6 +9,7 @@ services:
       - JENKINS_OPTS=--httpPort=8080 --httpsPort=8443 --httpsKeyStore=${httpsKeyStore} --httpsKeyStorePassword=${httpsKeyStorePassword}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ${DOCKER_BIN}:/usr/bin/docker
       - jenkins-master:/var/jenkins_home
       - /etc/keystore.jks:/etc/keystore.jks
 
@@ -23,6 +24,7 @@ services:
       JENKINS_RETRY: "10"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ${DOCKER_BIN}:/usr/bin/docker
       - jenkins-worker:/var/jenkins_home/worker
     depends_on:
       - master
