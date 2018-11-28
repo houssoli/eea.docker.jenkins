@@ -1,7 +1,10 @@
 version: "2"
 services:
   master:
-    image: lhoussou/jenkins-master:v1
+    image: lhoussou/jenkins-master:v1.1
+    build:
+      context: "${PWD}.master"
+    container_name: jenkins-master
     ports:
       - "8443:8443"
     environment:
@@ -12,9 +15,15 @@ services:
       - ${DOCKER_BIN}:/usr/bin/docker
       - jenkins-master:/var/jenkins_home
       - /etc/keystore.jks:/etc/keystore.jks
+      # - "${PWD}/.tmpdir/jobs:/var/jenkins_home/jobs/"
+      # - "${PWD}/.tmpdir/m2deps:/var/jenkins_home/.m2/repository/"
+      # - "${PWD}/.tmpdir/downloads:/var/jenkins_home/downloads"
 
   worker:
-    image: lhoussou/jenkins-slave:v1
+    image: lhoussou/jenkins-slave:v1.1
+    build:
+      context: "${PWD}.slave"
+    container_name: jenkins-slave
     environment:
       JAVA_OPTS: "-Xmx2048m"
       JENKINS_MASTER: "http://master:8080"
@@ -32,6 +41,7 @@ services:
   gitlab:
     image: 'gitlab/gitlab-ce:10.8.2-ce.0'
     hostname: 'gitlab.example.com'
+    container_name: gitlab-ce
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         gitlab_rails['lfs_enabled'] = true
