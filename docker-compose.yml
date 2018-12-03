@@ -15,6 +15,7 @@ services:
       - ${DOCKER_BIN}:/usr/bin/docker
       - jenkins-master:/var/jenkins_home
       - /etc/keystore.jks:/etc/keystore.jks
+      # - "${PWD}.master/filebeat.yml:/etc/filebeat/filebeat.yml:ro"
       # - "${PWD}/.tmpdir/jobs:/var/jenkins_home/jobs/"
       # - "${PWD}/.tmpdir/m2deps:/var/jenkins_home/.m2/repository/"
       # - "${PWD}/.tmpdir/downloads:/var/jenkins_home/downloads"

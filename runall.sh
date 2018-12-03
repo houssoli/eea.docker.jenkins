@@ -6,8 +6,8 @@
 #clean anything with same name to get rid of clashes
 docker-compose -f docker-compose.yml down
 
-#update older jenkins image
-docker-compose build
+#update older jenkins image, make sure to remove intermediate containers
+docker-compose build --force-rm
 # #update older jenkins image, make sure it doesnt use cache
 # docker-compose build --no-cache
 
